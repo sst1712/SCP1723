@@ -26,7 +26,7 @@ const model = genAI.getGenerativeModel({
     - Fallbacks: If you cannot answer a specific question, respond with: "I'm sorry, I don't have that specific information. I can help you with pricing, route tracking, or order management instead. How can I assist you further?"
     Be professional, helpful, and concise.`
 });
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb+srv://SCP1723:SCP1723@cluster0.nyfeg0u.mongodb.net/?appName=Cluster0")
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.error("Connection error:", err));
 
