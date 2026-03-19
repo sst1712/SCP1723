@@ -95,7 +95,7 @@ setTimeout(() => {
 }, 500); // Increased timeout so the success message can be seen
 });
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "http://localhost:5000/api";
 
 async function clientBtn() {
     const name = document.getElementById("clientName").value;
