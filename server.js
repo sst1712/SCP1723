@@ -91,6 +91,7 @@ function generateId() {
     return "CL-" + Math.random().toString(36).substring(2, 9);
 }
 
+app.get("/", (req, res) => res.send("OK"));
 app.post("/api/client", async (req, res) => {
     try {
         const { name, location, email, license, country } = req.body;
