@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+
+    <style>
+        /* ✅ FLOATING CHAT BUTTON */
+        #chat-trigger {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 9999;
+        }
+
+        #chat-trigger:hover {
+            transform: scale(1.1);
+        }
+
+        /* Optional pulse animation */
+        #chat-trigger {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(37,99,235,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="sidebar">
+        <h2>Client</h2>
+        <a href="client.html">Home</a>
+        <a href="#" onclick="loadPage('client_make_order.html')">Make Order</a>
+        <a href="#" onclick="loadPage('client_order.html')">Orders</a>
+        <a href="#" onclick="loadPage('client_profile.html')">Profile</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="nav-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+                <button class="nav-btn" onclick="logout()" title="Logout" style="color:#ef4444;">🚪</button>
+            </div>
+            <div id="username" style="font-weight:600; color:#94a3b8;">Welcome, Client</div>
+
+        </div>
+
+
+        <!-- HOME CONTENT -->
+        <div class="content" id="mainContent">
+            <h1>Dashboard</h1>
+            <p>Latest Logistics News & Updates</p>
+
+            <div class="news">
+                <div class="card">🚢 Shipping delays expected this week</div>
+                <div class="card">📦 Warehouse automation increasing</div>
+                <div class="card">✈ Air cargo demand rising</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ✅ FLOATING CHAT BUTTON -->
+<button id="chat-trigger">💬</button>
+
+<script src="makeorder.js"></script>
+<script src="order.js"></script>
+<script src="support.js"></script>
+<script src="tutorial.js"></script>
+
+<script>
+// ✅ RUN AFTER PAGE LOAD
+document.addEventListener("DOMContentLoaded", () => {
+    setUsername();
+    initChat(); // Initialize Chat from support.js
+    if (typeof initTutorial === 'function') initTutorial('client');
+});
+
+
+// 🔥 TOGGLE SIDEBAR
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+}
+
+// 🔥 LOGOUT
+function logout() {
+    if(confirm("Are you sure you want to logout?")) {
+        localStorage.clear();
+        window.location.href = "index.html"; // Or index.html
+    }
+}
+
+
+// 🔥 SET USERNAME
+function setUsername() {
+    const el = document.getElementById("username");
+    const name = localStorage.getItem("clientName"); // 🔥 Specifically look for client name
+    el.textContent = "Welcome, " + (name || "Client");
+}
+
+
+// 🔥 LOAD PAGE FUNCTION
+function loadPage(page) {
+    fetch(page)
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+
+            document.getElementById("mainContent").innerHTML =
+                doc.body.innerHTML;
+
+            // 🔥 Ensure sidebar matches current state if needed
+            // (Standard behavior: Keep sidebar visible on page load unless manually toggled)
+
+            // Re-run scripts
+
+            setTimeout(() => {
+                if (document.getElementById("search")) {
+                    initSearch();
+                }
+
+                if (document.getElementById("clientName")) {
+                    initOrderForm();
+                }
+
+                if (document.getElementById("ordersList")) {
+                    initOrders();
+                }
+
+                if (document.getElementById("profileName")) {
+                    loadProfile();
+                }
+
+                setUsername();
+            }, 100);
+        })
+        .catch(error => console.error("Error loading page:", error));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<div class="container profile-container">
+    <h2>My Profile (Client)</h2>
+    <div id="profileForm" class="form-section">
+        <label>Name (Non-editable)</label>
+        <input type="text" id="profileName" disabled style="background-color: #f1f5f9;">
+
+        <label>Location</label>
+        <input type="text" id="profileLocation" placeholder="Enter your location">
+
+        <label>Email Address</label>
+        <input type="email" id="profileEmail" placeholder="Enter your email">
+
+        <label>License Number</label>
+        <input type="text" id="profileLicense" placeholder="Enter your license">
+
+        <label>Country</label>
+        <input type="text" id="profileCountry" placeholder="Enter your country">
+
+        <button class="primary-btn" onclick="updateProfile('client')">Update Profile</button>
+    </div>
+</div>
+
+<style>
+.profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.profile-container h2 {
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+.form-section label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #64748b;
+}
+.form-section input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+.primary-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+</style>

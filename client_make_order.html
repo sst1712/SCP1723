@@ -1,0 +1,308 @@
+<div class="make-order-wizard">
+    <!-- STEP INDICATOR -->
+    <div class="wizard-steps">
+        <div class="step active" id="step-indicator-1">
+            <span class="step-num">1</span>
+            <span class="step-label">Find Product</span>
+        </div>
+        <div class="step" id="step-indicator-2">
+            <span class="step-num">2</span>
+            <span class="step-label">Confirm & Place</span>
+        </div>
+    </div>
+
+    <!-- 🔹 STEP 1: SEARCH & SELECT -->
+    <div id="step-1" class="wizard-content">
+        <div class="wizard-card" style="background: #1e293b; color: white; border: 1px solid #334155;">
+            <h2>🔍 What are you looking for?</h2>
+            <p style="color: #94a3b8;">Search for a product or a trusted supplier.</p>
+            
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Try 'Steel', 'Cement', or 'Mumbai Port'..." style="background:#0f172a; border-color:#334155; color:white;">
+                <div id="dropdown" class="dropdown" style="background:#1e293b; color:white; border-color:#334155;"></div>
+            </div>
+
+            <div class="popular-suggestions">
+                <span>Popular:</span>
+                <div id="popularList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 STEP 2: ORDER DETAILS (ONE-STEP CONFIRMATION) -->
+    <div id="step-2" class="wizard-content" style="display:none;">
+        <div class="wizard-card" style="background: #1e293b; color: white; border: 1px solid #334155; max-width: 600px; margin: 0 auto;">
+            <h3 style="color: #00e5c1; border-bottom: 2px solid #334155; padding-bottom:15px; margin-bottom:20px;">📝 Finalize Order</h3>
+            
+            <label style="color:#94a3b8;">Client Name</label>
+            <input type="text" id="clientName" readonly style="background:#0f172a; border-color:#334155; color:#94a3b8;">
+
+            <label style="color:#94a3b8;">Supplier Details</label>
+            <div class="readonly-group">
+                <input type="text" id="supplierName" readonly style="background:#0f172a; border-color:#334155; color:#94a3b8;">
+                <input type="text" id="supplierLocation" readonly style="background:#0f172a; border-color:#334155; color:#94a3b8;">
+            </div>
+
+            <label style="color:#94a3b8;">Selected Product</label>
+            <input type="text" id="goods" readonly style="background:#0f172a; border-color:#334155; color:#94a3b8;">
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <label style="color:#94a3b8; margin:0;">Quantity (Tons)</label>
+                        <div class="qty-shortcuts" style="display:flex; gap:5px;">
+                            <button onclick="setMinQty()" style="background:#334155; border:none; color:#94a3b8; padding:2px 8px; border-radius:4px; font-size:10px; cursor:pointer;">MIN (1)</button>
+                            <button onclick="setMaxQty()" style="background:#334155; border:none; color:#00e5c1; padding:2px 8px; border-radius:4px; font-size:10px; cursor:pointer;">MAX</button>
+                        </div>
+                    </div>
+                    <input type="number" id="quantity" placeholder="10" min="1" style="background:#0f172a; border-color:#334155; color:white;">
+                </div>
+            </div>
+
+            <label style="color:#94a3b8;">Delivery Destination</label>
+            <input type="text" id="deliveryLocation" placeholder="Enter full delivery address" style="background:#0f172a; border-color:#334155; color:white;">
+
+            <div class="wizard-actions" style="margin-top:30px;">
+                <button class="primary-btn" onclick="placeOrder()" style="width:100%; padding:15px; background:#2563eb; color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer; font-size:16px;">🚀 Confirm & Place Order</button>
+                <button class="secondary-btn" onclick="goToStep(1)" style="width:100%; margin-top:10px; padding:12px; background:none; border:1px solid #334155; color:#94a3b8; border-radius:10px; font-weight:600; cursor:pointer;">⬅ Change Product</button>
+            </div>
+        </div>
+    </div>
+
+
+        </div>
+    </div>
+
+    <!-- 🔹 STEP 3: SUCCESS -->
+    <div id="step-3" class="wizard-content text-center" style="display:none;">
+        <div class="wizard-card success-card" style="background:#1e293b; color:white; border:1px solid #334155;">
+            <div class="success-icon">🎉</div>
+            <h2 style="color:#00e5c1;">Order Placed Successfully!</h2>
+            <p style="color:#94a3b8;">Your supplier has been notified and will review your order shortly.</p>
+            
+            <div id="supplier-contact-info" style="margin-top:25px; padding:20px; background:#0f172a; border-radius:12px; border:1px solid #334155; text-align:left;">
+                <h4 style="margin:0 0 10px 0; color:#00e5c1;">📞 Supplier Contact Details</h4>
+                <p style="margin:5px 0; font-size:14px;"><b>Name:</b> <span id="conf-supplier-name">-</span></p>
+                <p style="margin:5px 0; font-size:14px;"><b>Phone:</b> <span id="conf-supplier-phone">+1 (555) 123-4567</span></p>
+                <p style="margin:5px 0; font-size:14px;"><b>Email:</b> <span id="conf-supplier-email">supplier@logistics.com</span></p>
+            </div>
+
+            <button class="primary-btn" onclick="loadPage('client_order.html')" style="margin-top:25px; width:100%;">View My Orders</button>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.make-order-wizard {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Wizard Steps */
+.wizard-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 60px;
+    position: relative;
+}
+.wizard-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+.step {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.step-num {
+    width: 40px;
+    height: 40px;
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: 2px solid #e2e8f0;
+}
+.step-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+}
+.step.active .step-num {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+.step.active .step-label {
+    color: #1e293b;
+}
+
+/* Cards */
+.wizard-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+.wizard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 25px;
+}
+
+/* Search */
+.search-container {
+    position: relative;
+    margin-top: 20px;
+}
+#search {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#search:focus {
+    border-color: #2563eb;
+}
+
+.popular-suggestions {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #64748b;
+    font-size: 14px;
+}
+#popularList {
+    display: flex;
+    gap: 10px;
+}
+.popular-item {
+    background: #f1f5f9;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #475569;
+}
+
+/* Forms */
+label {
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+    color: #475569;
+    font-size: 14px;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+.readonly-group {
+    display: flex;
+    gap: 10px;
+}
+.readonly-group input {
+    background: #f8fafc;
+    color: #64748b;
+    flex: 1;
+}
+
+/* Summary */
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    color: #475569;
+}
+.border-top {
+    border-top: 1px solid #f1f5f9;
+    margin-top: 10px;
+}
+.total-row {
+    margin-top: 20px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.total-row h2 {
+    color: #2563eb;
+    margin-top: 5px;
+    font-size: 32px;
+}
+
+.wizard-actions {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.primary-btn {
+    padding: 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+}
+.secondary-btn {
+    padding: 12px;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.success-card {
+    padding: 60px 40px;
+}
+.success-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 100;
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+@media (max-width: 850px) {
+    .wizard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

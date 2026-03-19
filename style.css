@@ -1,0 +1,256 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: white;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00e5c1;
+}
+
+.navbar nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #ddd;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: #00e5c1;
+}
+
+/* ALERT */
+.alert-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: 0.3s ease;
+    z-index: 999;
+}
+
+.alert-box.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1569154941061-e231b4725ef1') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 100px 60px;
+    position: relative;
+}
+
+/* TEXT */
+.hero-text {
+    max-width: 500px;
+    z-index: 2;
+}
+
+.name {
+    font-size: 50px;
+    color: #ff0505;
+}
+
+/* MAIN FORM CARD */
+/* FORM CARD */
+.form-card {
+    background: white;
+    color: black;
+    padding: 25px;
+    width: 350px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background: #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #00e5c1;
+    color: white;
+    font-weight: bold;
+}
+
+/* INPUT */
+.form-fields input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* 🔥 IMPORTANT SWITCH LOGIC */
+.form-fields {
+    display: none;
+}
+
+.form-fields.active {
+    display: block;
+}
+
+/* HEADER */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-header select {
+    padding: 5px;
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background: #eee;
+    transition: 0.3s;
+}
+
+.tab.active {
+    background: #00e5c1;
+    color: white;
+    font-weight: bold;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-group input:focus {
+    border-color: #00e5c1;
+    outline: none;
+}
+
+/* BUTTON */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #0f172a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.submit-btn:hover {
+    background: #00e5c1;
+    color: black;
+}
+
+/* ========================= */
+/* 🔥 FIXED SEPARATE FORMS */
+/* ========================= */
+
+.forms-container {
+    display: flex;
+    gap: 40px;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+/* IMPROVED FORM CARDS */
+.forms-container .form-card {
+    width: 260px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    transition: 0.3s;
+}
+
+.forms-container .form-card:hover {
+    transform: translateY(-5px);
+}
+
+/* INPUT FIX */
+.forms-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+@media(max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 120px 20px;
+    }
+}

@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>My Orders</h2>
+
+<!-- 🔍 FILTERS -->
+<div class="filters">
+    <button class="filter-btn active" onclick="filterOrders('All', this)">All</button>
+    <button class="filter-btn" onclick="filterOrders('Pending', this)">Pending</button>
+    <button class="filter-btn" onclick="filterOrders('Transporting', this)">Transporting</button>
+    <button class="filter-btn" onclick="filterOrders('Delayed', this)">Delayed</button>
+    <button class="filter-btn" onclick="filterOrders('Delivered', this)">Delivered</button>
+</div>
+
+<!-- 📊 TABLE -->
+<table class="orders-table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Goods</th>
+            <th>Qty</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody id="ordersList"></tbody>
+</table>
+
+</div>
+
+
+<link rel="stylesheet" href="order.css">
