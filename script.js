@@ -95,7 +95,7 @@ setTimeout(() => {
 }, 500); // Increased timeout so the success message can be seen
 });
 
-const API_URL = "https://myserver.onrender.com/api";
+const API_URL = "https://scp1723.onrender.com"; 
 
 async function clientBtn() {
     const name = document.getElementById("clientName").value;
